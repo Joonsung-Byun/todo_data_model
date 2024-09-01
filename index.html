@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./todo.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="p-3">
+    <h1 class="mb-5">JavaScript ToDo App</h1>
+
+    <form>
+        <!--name form-->
+        <div class="mb-3">
+          <label>What's your To Do?</label>
+          <input type="text" class="form-control" id="todo_name">
+        </div>
+
+        <!--category form-->
+        <div class="mb-3">
+            <label>What's your To Do's category?</label>
+            <select class="form-select" id="category">
+                <option value="">Choose your To Do's category</option>
+                <option value="chores">Chores</option>
+                <option value="Homework">Homework</option>
+                <option value="Work">Work</option>
+                <option value="Exercise">Exercise</option>
+            </select>
+        </div>
+
+        
+        
+        
+        <!--due date form-->
+        <div class="mb-3">
+            <label>When is your To Do due?</label>
+            <input type="date" class="form-control" id="due_date">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="add_btn">Add To-Do</button>
+
+        <div id="todo_list">
+
+        </div>
+
+        
+      </form>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./todo.js"></script>
+</body>
+</html>
