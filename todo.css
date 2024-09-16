@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #todo_list {
     list-style-type: none;
     padding: 0;

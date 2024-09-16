@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./todo.css" rel="stylesheet">
     <title>Document</title>
+    <link href="dist/styles.css" rel="stylesheet">
 </head>
 <body class="p-3">
-    <h1 class="mb-5">JavaScript ToDo App</h1>
+    <h1 class="mb-5 text-3xl">JavaScript ToDo App</h1>
 
     <form>
         <!--name form-->
-        <div class="mb-3">
+        <div class="mb-6">
           <label>What's your To Do?</label>
-          <input type="text" class="form-control" id="todo_name">
+          <input type="text" class="form-control block border px-2" placeholder="Your ToDo name" id="todo_name">
         </div>
 
         <!--category form-->
-        <div class="mb-3">
+        <div class="mb-6">
             <label>What's your To Do's category?</label>
-            <input type="text" class="form-control" id="category">
+            <input type="text" class="form-control block  border px-2" placeholder="Your ToDo category" id="category">
         </div>
 
         
         
         
         <!--due date form-->
-        <div class="mb-3">
+        <div class="mb-6">
             <label>When is your To Do due?</label>
-            <input type="date" class="form-control" id="due_date">
+            <input type="date" class="form-control block border px-2" id="due_date">
         </div>
 
-        <button type="submit" class="btn btn-primary" id="add_btn">Add To-Do</button>
+        <button type="submit" class="btn border px-4 py-2 bg-green-600 text-white rounded-lg"  id="add_btn">Add To-Do</button>
         <p>How many todos? <span id="sum"></span></p>
         <p>How many todos are done? <span id="done"></span></p>
         <p>How many todos are not done? <span id="not_done"></span></p>
