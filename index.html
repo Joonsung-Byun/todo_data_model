@@ -20,13 +20,7 @@
         <!--category form-->
         <div class="mb-3">
             <label>What's your To Do's category?</label>
-            <select class="form-select" id="category">
-                <option value="">Choose your To Do's category</option>
-                <option value="chores">Chores</option>
-                <option value="Homework">Homework</option>
-                <option value="Work">Work</option>
-                <option value="Exercise">Exercise</option>
-            </select>
+            <input type="text" class="form-control" id="category">
         </div>
 
         
@@ -39,13 +33,19 @@
         </div>
 
         <button type="submit" class="btn btn-primary" id="add_btn">Add To-Do</button>
+        <p>How many todos? <span id="sum"></span></p>
+        <p>How many todos are done? <span id="done"></span></p>
+        <p>How many todos are not done? <span id="not_done"></span></p>
 
         <div id="todo_list">
 
         </div>
 
         
+
+        
       </form>
+      <button id="clear">Clear completed todos</button>
     <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./todo.js"></script>
