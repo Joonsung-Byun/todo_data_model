@@ -76,6 +76,8 @@ function renderTodos(todos) {
     edit_li_name.setAttribute("id", `new_todo_name_${index}`);
     edit_li_name.setAttribute("placeholder", "Edit To Do's name");
     edit_li_name.setAttribute('value', single_todo.todo_name)
+    edit_li_name.style.border = "1px solid black";
+    edit_li_name.style.padding = "5px 10px";
     edit_li_name.style.display = "none";
 
     const li_category = document.createElement("li");
@@ -87,6 +89,8 @@ function renderTodos(todos) {
     edit_li_category.setAttribute("class", `edit_input_${index}`);
     edit_li_category.setAttribute("id", `new_todo_category_${index}`)
     edit_li_category.setAttribute("placeholder", "Edit To Do's category");
+    edit_li_category.style.border = "1px solid black";
+    edit_li_category.style.padding = "5px 10px";
     edit_li_category.setAttribute('value', single_todo.todo_category)
     edit_li_category.style.display = "none";
 
@@ -99,6 +103,8 @@ function renderTodos(todos) {
     edit_due_date.setAttribute("class", `edit_input_${index}`);
     edit_due_date.setAttribute("placeholder", "Edit To Do's due date");
     edit_due_date.setAttribute("id", `new_todo_due_date_${index}`);
+    edit_due_date.style.border = "1px solid black";
+    edit_due_date.style.padding = "5px 10px";
     edit_due_date.setAttribute('value', single_todo.todo_due_date)
     edit_due_date.style.display = "none";
 
