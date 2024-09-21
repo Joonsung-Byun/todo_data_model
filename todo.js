@@ -1,33 +1,33 @@
 let todos = [
   {
-    todo_name: "homework", // string data type
-    todo_complete: false, // boolean data type
-    todo_id: 1, // number data type
-    todo_category: "school", // string data type
-    todo_due_date: "2024-09-01", // date data type
-  }, // object data type
-  {
-    todo_name: "grocery shopping", // string data type
-    todo_complete: false, // boolean data type
-    todo_id: 2, // number data type
-    todo_category: "chores", // string data type
-    todo_due_date: "2024-09-03", // date data type
+    todo_name: "homework",
+    todo_complete: false,
+    todo_id: 1,
+    todo_category: "school",
+    todo_due_date: "2024-09-01",
   },
   {
-    todo_name: "work on project", // string data type
-    todo_complete: false, // boolean data type
-    todo_id: 3, // number data type
-    todo_category: "work", // string data type
-    todo_due_date: "2024-09-05", // date data type
+    todo_name: "grocery shopping",
+    todo_complete: false,
+    todo_id: 2,
+    todo_category: "chores",
+    todo_due_date: "2024-09-03",
   },
   {
-    todo_name: "read book", // string data type
-    todo_complete: false, // boolean data type
-    todo_id: 4, // number data type
-    todo_category: "other", // string data type
-    todo_due_date: "2024-09-07", // date data type
+    todo_name: "work on project",
+    todo_complete: false,
+    todo_id: 3,
+    todo_category: "work",
+    todo_due_date: "2024-09-05",
   },
-]; // array data type
+  {
+    todo_name: "read book",
+    todo_complete: false,
+    todo_id: 4,
+    todo_category: "other",
+    todo_due_date: "2024-09-07",
+  },
+];
 
 let currentCategory = "";
 
@@ -96,13 +96,15 @@ function viewByCategory(event, el) {
 
 function renderTodos(todos) {
   todo_list.innerHTML = "";
-  if(currentCategory === "all" || currentCategory === "") {
-    todos = todos;
-  } else if (currentCategory !== "") {
-    todos = todos.filter((todo) => todo.todo_category === currentCategory);
+  let filteredTodos;
+
+  if (currentCategory === "all" || currentCategory === "") {
+    filteredTodos = todos;
+  } else {
+    filteredTodos = todos.filter((todo) => todo.todo_category === currentCategory);
   }
 
-  todos.forEach((todo) => {
+  filteredTodos.forEach((todo) => {
     let done = todo.todo_complete ? "done" : "";
     let newTodo = `
       <div data-todoid=${todo.todo_id}>
@@ -119,22 +121,22 @@ function renderTodos(todos) {
           <option value="other">Other</option>
         </select>
         <div>
-        <button data-todoid=${todo.todo_id} onclick="deleteTodo(event, this)">🗑️</button>
-        <button data-todoid=${todo.todo_id} onclick="showEditInputs(event, this)" id="editBtn_${todo.todo_id}">Edit</button>
-        <button data-todoid=${todo.todo_id} class="editInputs_${todo.todo_id} editInputs" onclick="completeEdit(event, this)">Save</button>
+          <button data-todoid=${todo.todo_id} onclick="deleteTodo(event, this)">🗑️</button>
+          <button data-todoid=${todo.todo_id} onclick="showEditInputs(event, this)" id="editBtn_${todo.todo_id}">Edit</button>
+          <button data-todoid=${todo.todo_id} class="editInputs_${todo.todo_id} editInputs" onclick="completeEdit(event, this)">Save</button>
         </div>
       </div>
-      `;
+    `;
     todo_list.insertAdjacentHTML("beforeend", newTodo);
   });
 }
 
 function sumTodos(arr) {
-  if(currentCategory !== ""  && currentCategory !== "all") {
+  if (currentCategory !== "" && currentCategory !== "all") {
     arr = arr.filter((todo) => todo.todo_category === currentCategory);
   }
 
-  if(currentCategory === "all" || currentCategory === "") {
+  if (currentCategory === "all" || currentCategory === "") {
     arr = todos;
   }
   const sum = document.querySelector("#sum");
@@ -142,10 +144,10 @@ function sumTodos(arr) {
 }
 
 function countDoneTodos(arr) {
-  if(currentCategory !== "" && currentCategory !== "all") {
+  if (currentCategory !== "" && currentCategory !== "all") {
     arr = arr.filter((todo) => todo.todo_category === currentCategory);
   }
-  if(currentCategory === "all" || currentCategory === "") {
+  if (currentCategory === "all" || currentCategory === "") {
     arr = todos;
   }
   const done = document.querySelector("#done");
@@ -153,10 +155,10 @@ function countDoneTodos(arr) {
 }
 
 function countNotDoneTodos(arr) {
-  if(currentCategory !== "" && currentCategory !== "all") {
+  if (currentCategory !== "" && currentCategory !== "all") {
     arr = arr.filter((todo) => todo.todo_category === currentCategory);
   }
-  if(currentCategory === "all" || currentCategory === "") {
+  if (currentCategory === "all" || currentCategory === "") {
     arr = todos;
   }
   const notDone = document.querySelector("#not_done");
@@ -208,7 +210,6 @@ function completeEdit(event, el) {
   countNotDoneTodos(todos);
 }
 
-// Initial rendering and counts
 renderTodos(todos);
 sumTodos(todos);
 countDoneTodos(todos);
