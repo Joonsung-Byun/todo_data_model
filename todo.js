@@ -12,18 +12,40 @@ let todos = [
     todo_id: 2, // number data type
     todo_category: "chores", // string data type
     todo_due_date: "2024-09-03", // date data type
-  }, // object data type
+  },
+  {
+    todo_name: "work on project", // string data type
+    todo_complete: false, // boolean data type
+    todo_id: 3, // number data type
+    todo_category: "work", // string data type
+    todo_due_date: "2024-09-05", // date data type
+  },
+  {
+    todo_name: "read book", // string data type
+    todo_complete: false, // boolean data type
+    todo_id: 4, // number data type
+    todo_category: "other", // string data type
+    todo_due_date: "2024-09-07", // date data type
+  },
 ]; // array data type
+
+let currentCategory = "";
 
 // DOM elements
 const todo_list = document.querySelector("#todo_list");
+const clearBtn = document.querySelector("#clearDoneTodos");
 
-// complete todo and mark it as done
+// Event Listeners
+clearBtn.addEventListener("click", clearDoneTodos);
+
+// Functions
 function completeTodo(event, el) {
   event.stopPropagation();
   let clickedTodoId = el.dataset.todoid;
   toggleTodo(clickedTodoId);
   renderTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
 }
 
 function toggleTodo(clickedTodoId) {
@@ -36,6 +58,9 @@ function deleteTodo(event, el) {
   let clickedTodoId = el.dataset.todoid;
   todos = todos.filter((todo) => todo.todo_id != clickedTodoId);
   renderTodos(todos);
+  sumTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
 }
 
 function addTodo() {
@@ -45,7 +70,9 @@ function addTodo() {
   
   todos.push(newTodoObj(todo_input, selectedCategory, dueDate));
   renderTodos(todos);
-  console.log(todos);
+  sumTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
 }
 
 function newTodoObj(todoName, todoCategory, todoDueDate) {
@@ -58,10 +85,24 @@ function newTodoObj(todoName, todoCategory, todoDueDate) {
   };
 }
 
+function viewByCategory(event, el) {
+  event.stopPropagation();
+  currentCategory = el.value;
+  renderTodos(todos);
+  sumTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
+}
+
 function renderTodos(todos) {
   todo_list.innerHTML = "";
+  if(currentCategory === "all" || currentCategory === "") {
+    todos = todos;
+  } else if (currentCategory !== "") {
+    todos = todos.filter((todo) => todo.todo_category === currentCategory);
+  }
 
-  todos.forEach((todo, index) => {
+  todos.forEach((todo) => {
     let done = todo.todo_complete ? "done" : "";
     let newTodo = `
       <div data-todoid=${todo.todo_id}>
@@ -75,7 +116,6 @@ function renderTodos(todos) {
           <option value="school">School</option>
           <option value="chores">Chores</option>
           <option value="work">Work</option>
-          <option value="personal">Personal</option>
           <option value="other">Other</option>
         </select>
         <div>
@@ -83,13 +123,53 @@ function renderTodos(todos) {
         <button data-todoid=${todo.todo_id} onclick="showEditInputs(event, this)" id="editBtn_${todo.todo_id}">Edit</button>
         <button data-todoid=${todo.todo_id} class="editInputs_${todo.todo_id} editInputs" onclick="completeEdit(event, this)">Save</button>
         </div>
-        
       </div>
       `;
     todo_list.insertAdjacentHTML("beforeend", newTodo);
   });
 }
-renderTodos(todos);
+
+function sumTodos(arr) {
+  if(currentCategory !== ""  && currentCategory !== "all") {
+    arr = arr.filter((todo) => todo.todo_category === currentCategory);
+  }
+
+  if(currentCategory === "all" || currentCategory === "") {
+    arr = todos;
+  }
+  const sum = document.querySelector("#sum");
+  sum.innerHTML = arr.length;
+}
+
+function countDoneTodos(arr) {
+  if(currentCategory !== "" && currentCategory !== "all") {
+    arr = arr.filter((todo) => todo.todo_category === currentCategory);
+  }
+  if(currentCategory === "all" || currentCategory === "") {
+    arr = todos;
+  }
+  const done = document.querySelector("#done");
+  done.innerHTML = arr.filter((todo) => todo.todo_complete).length;
+}
+
+function countNotDoneTodos(arr) {
+  if(currentCategory !== "" && currentCategory !== "all") {
+    arr = arr.filter((todo) => todo.todo_category === currentCategory);
+  }
+  if(currentCategory === "all" || currentCategory === "") {
+    arr = todos;
+  }
+  const notDone = document.querySelector("#not_done");
+  notDone.innerHTML = arr.filter((todo) => !todo.todo_complete).length;
+}
+
+function clearDoneTodos() {
+  todos = todos.filter((todo) => !todo.todo_complete);
+  renderTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
+  sumTodos(todos);
+}
 
 function showEditInputs(event, el) {
   event.stopPropagation();
@@ -99,18 +179,16 @@ function showEditInputs(event, el) {
     input.classList.add("showEditInputs")
   });
   editBtn.classList.add("hidden");
-  bindValues(event, el);
+  bindValues(el);
 }
 
-function bindValues(event, el) {
-  event.stopPropagation();
+function bindValues(el) {
   let clickedTodoId = el.dataset.todoid;
   let clickedTodo = todos.find((todo) => todo.todo_id == clickedTodoId);
   let editInputs = document.querySelectorAll(`.editInputs_${clickedTodoId}`);
   editInputs[0].value = clickedTodo.todo_name;
   editInputs[1].value = clickedTodo.todo_due_date;
   editInputs[2].value = clickedTodo.todo_category;
-  
 }
 
 function completeEdit(event, el) {
@@ -125,5 +203,13 @@ function completeEdit(event, el) {
   clickedTodo.todo_due_date = dueDate;
   clickedTodo.todo_category = category;
   renderTodos(todos);
+  sumTodos(todos);
+  countDoneTodos(todos);
+  countNotDoneTodos(todos);
 }
 
+// Initial rendering and counts
+renderTodos(todos);
+sumTodos(todos);
+countDoneTodos(todos);
+countNotDoneTodos(todos);

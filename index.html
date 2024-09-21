@@ -42,21 +42,30 @@
         <button class="btn border px-4 py-2 bg-green-600 text-white rounded-lg mb-6" id="add_btn"
             onclick="addTodo()">Add To-Do</button>
 
-        <div>
+        <!-- <div>
             <h2 class="text-xl font-bold mb-4">View all</h2>
+        </div> -->
+
+        <div class="flex gap-4 mb-6">
+           <input type="radio" id="all" value="all" name="category" onclick="viewByCategory(event, this)">
+            <label for="all">All</label>
+
+            <input type="radio" id="chores" value="chores" name="category" onclick="viewByCategory(event, this)">
+            <label for="chores">Chores</label>
+
+            <input type="radio" id="work" value="work" name="category" onclick="viewByCategory(event, this)">
+            <label for="work">Work</label>
+
+            <input type="radio" id="school" value="school" name="category" onclick="viewByCategory(event, this)">
+            <label for="school">School</label>
+
+            <input type="radio" id="exercise" value="exercise" name="category" onclick="viewByCategory(event, this)">
+            <label for="exercise">Exercise</label>
+
+            <input type="radio" id="other" value="other" name="category" onclick="viewByCategory(event, this)">
+            <label for="other">Other</label>
         </div>
 
-        <div class="mb-6">
-            <h2 class="text-xl font-bold mb-4">View with categories</h2>
-            <ul class="flex">
-                <li class="border px-2 py-1">Chores</li>
-                <li>Work</li>
-                <li>School</li>
-                <li>Exercise</li>
-                <li>Other</li>
-            </ul>
-        </div>
-        
 
         <div class="mb-6">
             <p>How many todos? <span id="sum"></span></p>
@@ -69,37 +78,8 @@
 
         </div>
 
-        <!-- <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-            <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 ">
-                <h2 class="text-xl font-bold mb-4">Todo:
-                    <input type="text" class="form-control border px-2" id="edit_todo_name">
-                </h2>
 
-                <h2 class="text-xl font-bold mb-4">Category:
-                    <select class="block border mt-2" id="edit_categorySelect">
-                        <option value="">--Please choose an category--</option>
-                        <option value="chores">Chores</option>
-                        <option value="work">Work</option>
-                        <option value="school">School</option>
-                        <option value="exercise">Exercise</option>
-                        <option value="other">Other</option>
-                    </select>
-                </h2>
-
-                <h2 class="text-xl font-bold mb-4">Due Date:
-                    <input type="date" class="form-control  border px-2" id="edit_due_date">
-                </h2>
-
-                <button id="updateBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-
-                <button id="closeModalBtn" class="bg-red-500 text-white px-4 py-2 rounded">Close</button>
-
-
-            </div>
-        </div> -->
-
-
-        <button id="clear">Clear completed todos</button>
+        <button id="clearDoneTodos">Clear completed todos</button>
     </main>
     <script src="./todo.js"></script>
 </body>
