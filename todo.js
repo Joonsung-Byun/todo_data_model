@@ -42,8 +42,10 @@ function addTodo() {
   let todo_input = document.querySelector("#todo_name").value;
   let selectedCategory = document.querySelector("#categorySelect").value;
   let dueDate = document.querySelector("#due_date").value;
+  
   todos.push(newTodoObj(todo_input, selectedCategory, dueDate));
   renderTodos(todos);
+  console.log(todos);
 }
 
 function newTodoObj(todoName, todoCategory, todoDueDate) {
@@ -57,10 +59,8 @@ function newTodoObj(todoName, todoCategory, todoDueDate) {
 }
 
 function renderTodos(todos) {
-  //reset the list
   todo_list.innerHTML = "";
 
-  //loop through the todos
   todos.forEach((todo, index) => {
     let done = todo.todo_complete ? "done" : "";
     let newTodo = `
@@ -68,8 +68,22 @@ function renderTodos(todos) {
         <li class="${done}" data-todoid=${todo.todo_id} onclick="completeTodo(event, this)">
           ${todo.todo_name}
         </li>
-        <span data-todoid=${todo.todo_id} onclick="deleteTodo(event, this)">🗑️</span>
-        <span data-todoid=${todo.todo_id} onclick="openModal(event, this)">Edit</span>
+        <input type="text" class="editInputs_${todo.todo_id} editInputs border"/>
+        <input type="date" class="editInputs_${todo.todo_id} editInputs border"/>
+        <select class="editInputs_${todo.todo_id} editInputs border">
+          <option value="">edit category</option>
+          <option value="school">School</option>
+          <option value="chores">Chores</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+          <option value="other">Other</option>
+        </select>
+        <div>
+        <button data-todoid=${todo.todo_id} onclick="deleteTodo(event, this)">🗑️</button>
+        <button data-todoid=${todo.todo_id} onclick="showEditInputs(event, this)" id="editBtn_${todo.todo_id}">Edit</button>
+        <button data-todoid=${todo.todo_id} class="editInputs_${todo.todo_id} editInputs" onclick="completeEdit(event, this)">Save</button>
+        </div>
+        
       </div>
       `;
     todo_list.insertAdjacentHTML("beforeend", newTodo);
@@ -77,52 +91,39 @@ function renderTodos(todos) {
 }
 renderTodos(todos);
 
-function openModal(event, el) {
+function showEditInputs(event, el) {
   event.stopPropagation();
-  const modal = document.getElementById("modal");
-
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  closeModalBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
+  let editInputs = document.querySelectorAll(`.editInputs_${el.dataset.todoid}`);
+  let editBtn = document.querySelector(`#editBtn_${el.dataset.todoid}`);
+  editInputs.forEach((input) => {
+    input.classList.add("showEditInputs")
   });
+  editBtn.classList.add("hidden");
+  bindValues(event, el);
+}
+
+function bindValues(event, el) {
+  event.stopPropagation();
   let clickedTodoId = el.dataset.todoid;
-  editingTodo(clickedTodoId);
+  let clickedTodo = todos.find((todo) => todo.todo_id == clickedTodoId);
+  let editInputs = document.querySelectorAll(`.editInputs_${clickedTodoId}`);
+  editInputs[0].value = clickedTodo.todo_name;
+  editInputs[1].value = clickedTodo.todo_due_date;
+  editInputs[2].value = clickedTodo.todo_category;
+  
 }
 
-function editingTodo(clickedTodoId) {
-  document.querySelector("#edit_todo_name").value = todos.find(
-    (todo) => todo.todo_id == clickedTodoId
-  ).todo_name;
-  document.querySelector("#edit_categorySelect").value = todos.find(
-    (todo) => todo.todo_id == clickedTodoId
-  ).todo_category;
-  document.querySelector("#edit_due_date").value = todos.find(
-    (todo) => todo.todo_id == clickedTodoId
-  ).todo_due_date;
-
-  let updateBtn = document.querySelector("#updateBtn");
-
-  updateBtn.addEventListener("click", function () {
-    let todoName = document.querySelector("#edit_todo_name").value;
-    let category = document.querySelector("#edit_categorySelect").value;
-    let dueDate = document.querySelector("#edit_due_date").value;
-
-    let clickedTodo = todos.find((todo) => todo.todo_id == clickedTodoId);
-    clickedTodo.todo_name = todoName;
-    clickedTodo.todo_category = category;
-    clickedTodo.todo_due_date = dueDate;
-
-    console.log(todos);
-
-    renderTodos(todos);
-    closeModal();
-  });
+function completeEdit(event, el) {
+  event.stopPropagation();
+  let clickedTodoId = el.dataset.todoid;
+  let editInputs = document.querySelectorAll(`.editInputs_${clickedTodoId}`);
+  let todoName = editInputs[0].value;
+  let dueDate = editInputs[1].value;
+  let category = editInputs[2].value;
+  let clickedTodo = todos.find((todo) => todo.todo_id == clickedTodoId);
+  clickedTodo.todo_name = todoName;
+  clickedTodo.todo_due_date = dueDate;
+  clickedTodo.todo_category = category;
+  renderTodos(todos);
 }
 
-function closeModal() {
-  const modal = document.getElementById("modal");
-  modal.classList.add("hidden");
-}
